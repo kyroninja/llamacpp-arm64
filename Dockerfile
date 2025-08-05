@@ -5,17 +5,15 @@ ARG LLAMA_CPP_TAG=b3042
 WORKDIR /llama
 
 # Install build dependencies
-RUN sudo pacman -Syu --noconfirm && \
-    sudo pacman -S --noconfirm git base-devel cmake ninja upx && \
-    sudo pacman -Scc --noconfirm && \
-    sudo rm -rf /var/cache/pacman/pkg/* /tmp/*
+RUN pacman -Syu --noconfirm && \
+    pacman -S --noconfirm git base-devel cmake ninja upx && \
+    pacman -Scc --noconfirm && \
+    rm -rf /var/cache/pacman/pkg/* /tmp/*
 
 # Clone and build specific version of llama.cpp
 RUN git clone --branch ${LLAMA_CPP_TAG} --depth 1 https://github.com/ggerganov/llama.cpp.git . && \
     cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release && \
-    cmake --build build --config Release -- -j$(nproc) && \
-    strip build/bin/* && \
-    upx --best build/bin/* || true
+    cmake --build build --config Release -- -j$(nproc)
 
 # ---------- Stage 2: Minimal Runtime ----------
 FROM arm64v8/alpine:3.22
