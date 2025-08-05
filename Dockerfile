@@ -4,6 +4,8 @@ FROM samip537/archlinux:yay AS builder
 ARG LLAMA_CPP_TAG=b3042
 WORKDIR /llama
 
+# Set root user
+USER root
 # Install build dependencies
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm git base-devel cmake ninja upx && \
