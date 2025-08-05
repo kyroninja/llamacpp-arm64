@@ -32,5 +32,5 @@ COPY --from=builder /llama/build/bin/ .
 EXPOSE 8080
 
 # Default shell, so user can run binaries directly
-ENTRYPOINT ["/bin/sh"]
+ENTRYPOINT ["/bin/bash"]
 CMD ["-c", "echo 'Usage: docker run image <binary> [args], e.g. llama-cli --help'"]
