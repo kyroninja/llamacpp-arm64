@@ -1,5 +1,5 @@
 # ---------- Stage 1: Build llama.cpp ----------
-FROM --platform=linux/arm64 samip537/archlinux:yay AS builder
+FROM samip537/archlinux:yay AS builder
 
 ARG LLAMA_CPP_TAG=b3042
 WORKDIR /llama
@@ -18,7 +18,7 @@ RUN git clone --branch ${LLAMA_CPP_TAG} --depth 1 https://github.com/ggerganov/l
     upx --best build/bin/* || true
 
 # ---------- Stage 2: Minimal Runtime ----------
-FROM --platform=linux/arm64 arm64v8/alpine:3.22
+FROM arm64v8/alpine:3.22
 
 WORKDIR /llama/build/bin
 
