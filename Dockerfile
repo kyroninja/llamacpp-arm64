@@ -22,7 +22,7 @@ RUN git clone https://github.com/ggerganov/llama.cpp.git .
 ENV CC64=aarch64-linux-gnu-gcc
 ENV CXX64=aarch64-linux-gnu-g++
 
-# Run CMake configure and build with your options
+# Run CMake configure and build
 RUN cmake -B build \
     -DCMAKE_SYSTEM_NAME=Linux \
     -DCMAKE_SYSTEM_PROCESSOR=aarch64 \
