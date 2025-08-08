@@ -63,5 +63,5 @@ COPY --from=builder /workspace/build /app/build
 # Set working directory to build directory
 WORKDIR /app/build/bin
 
-# Default command to run your app binary (adjust if needed)
+# Default command to run your app binary
 CMD ["/bin/bash"]
