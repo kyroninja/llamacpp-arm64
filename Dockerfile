@@ -1,4 +1,4 @@
-# Stage 1: Builder
+# Stage 1: Builder Docker
 FROM debian:bookworm-slim AS builder
 
 # Install build dependencies
