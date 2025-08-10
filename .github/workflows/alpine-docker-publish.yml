@@ -1,9 +1,9 @@
-name: Build and Push to GHCR
+name: Build and Push to GHCR (Alpine)
 
 on:
   push:
     branches:
-      - master
+      - alpine
 
 jobs:
   build-and-push:
@@ -23,7 +23,7 @@ jobs:
           username: ${{ secrets.GHCR_USERNAME }}
           password: ${{ secrets.GHCR_TOKEN }}
 
-      - name: Build and push image to GHCR
+      - name: Build and push image to GHCR (Alpine)
         uses: docker/build-push-action@v4
         with:
           context: .
