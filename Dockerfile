@@ -1,6 +1,8 @@
 # Stage 1: Builder Docker
 FROM debian:bookworm-slim AS builder
 
+ARG GGML_CPU_ARM_ARCH=armv8-a
+
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -11,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     libopenblas-dev \
     libgomp1 \
+    libcurl4-openssl-dev \
     && update-ca-certificates
 
 WORKDIR /workspace
@@ -23,26 +26,24 @@ ENV CC64=aarch64-linux-gnu-gcc
 ENV CXX64=aarch64-linux-gnu-g++
 
 # Run CMake configure and build
-RUN cmake -B build \
+RUN cmake -S . -B build \
     -DCMAKE_SYSTEM_NAME=Linux \
     -DCMAKE_SYSTEM_PROCESSOR=aarch64 \
     -DCMAKE_C_COMPILER=$CC64 \
     -DCMAKE_CXX_COMPILER=$CXX64 \
     -DCMAKE_BUILD_TYPE=Release \
-    -DBUILD_SHARED_LIBS=ON \
-    -DLLAMA_CURL=OFF \
+    -DGGML_NATIVE=OFF \
     -DLLAMA_BUILD_TESTS=OFF \
-    -DLLAMA_USE_SYSTEM_GGML=OFF \
-    -DGGML_ALL_WARNINGS=OFF \
-    -DGGML_ALL_WARNINGS_3RD_PARTY=OFF \
-    -DGGML_BUILD_EXAMPLES=OFF \
-    -DGGML_BUILD_TESTS=OFF \
-    -DGGML_LTO=ON \
-    -DGGML_RPC=ON \
-    -DGGML_BLAS=OFF \
-    -DGGML_BUILD_SERVER=ON \
-    -Wno-dev && \
-    cmake --build build -j$(nproc)
+    -DGGML_CPU_ARM_ARCH=${GGML_CPU_ARM_ARCH} && \
+    cmake --build build -j $(nproc)
+
+RUN mkdir -p /app/full \
+    && cp build/bin/* /app/full \
+    && cp *.py /app/full \
+    && cp -r gguf-py /app/full \
+    && cp -r requirements /app/full \
+    && cp requirements.txt /app/full \
+    && cp .devops/tools.sh /app/full/tools.sh
 
 # Stage 2: Runtime
 FROM arm64v8/debian:bookworm-slim
@@ -58,10 +59,10 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /app
 
 # Copy built binaries from builder
-COPY --from=builder /workspace/build /app/build
+COPY --from=builder /app/full /app
 
 # Set working directory to build directory
-WORKDIR /app/build/bin
+WORKDIR /app
 
 # Default command to run your app binary
 CMD ["/bin/bash"]
