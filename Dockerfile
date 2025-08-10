@@ -61,7 +61,7 @@ WORKDIR /app
 # Copy built binaries from builder
 COPY --from=builder /app/full /app
 
-# Set working directory to build directory
+# Set working directory to build directory where app lives
 WORKDIR /app
 
 # Default command to run your app binary
