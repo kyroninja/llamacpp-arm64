@@ -19,7 +19,7 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /workspace
 
 # Clone the repo
-RUN git clone https://github.com/ggerganov/llama.cpp.git .
+RUN git clone https://github.com/ggml-org/llama.cpp .
 
 # Set your cross compilers environment variables (adjust if needed)
 ENV CC64=aarch64-linux-gnu-gcc
