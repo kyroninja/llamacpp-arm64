@@ -61,8 +61,9 @@ WORKDIR /app
 # Copy built binaries from builder
 COPY --from=builder /app/full /app
 
-# Set working directory to build directory where app lives
-WORKDIR /app
+# Human-readable version label
+ARG LLAMA_COMMIT=unknown
+LABEL llama.version=$LLAMA_COMMIT
 
 # Default command to run your app binary
 CMD ["/bin/bash"]
