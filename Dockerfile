@@ -1,18 +1,30 @@
 # Stage 1: Builder Docker
-FROM debian:bookworm-slim AS builder
+# FROM debian:bookworm-slim AS builder
 
 # Install build dependencies
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    cmake \
-    git \
-    curl \
-    ninja-build \
-    ca-certificates \
-    libopenblas-dev \
-    libgomp1 \
-    libcurl4-openssl-dev \
-    && update-ca-certificates
+#RUN add-apt-repository ppa:ubuntu-toolchain-r/test
+#RUN apt-get update && apt-get install -y \
+#    build-essential \
+#    cmake \
+#    git \
+#    curl \
+#    ninja-build \
+#    ca-certificates \
+#    libopenblas-dev \
+#    libgomp1 \
+#    libcurl4-openssl-dev \
+#    && update-ca-certificates
+FROM archlinux:multilib-devel as builder
+
+RUN pacman -Syu --noconfirm && \
+    pacman -S --noconfirm \
+      cmake \
+      git \
+      curl \
+      ninja \
+      openblas \
+      gcc \
+      libcurl-compat
 
 WORKDIR /workspace
 
