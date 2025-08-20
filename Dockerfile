@@ -3,10 +3,7 @@ ARG BUILDPLATFORM_builder=linux/amd64
 ARG BUILDPLATFORM_runner=linux/arm64
 
 # Stage 1: Builder Docker
-FROM --platform=$BUILDPLATFORM_builder debian:trixie-slim AS builder
-
-# add multilib
-RUN dpkg --add-architecture i386
+FROM --platform=$BUILDPLATFORM_builder debian:bookwork-slim AS builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
@@ -14,14 +11,11 @@ RUN apt-get update && apt-get install -y \
     cmake \
     git \
     curl \
-    gcc-aarch64-linux-gnu \
-    g++-aarch64-linux-gnu \
     ninja-build \
     ca-certificates \
     libopenblas-dev \
     libgomp1 \
     libcurl4-openssl-dev \
-    libc6-dev-i386 \
     && update-ca-certificates
 
 WORKDIR /workspace
@@ -32,6 +26,9 @@ RUN git clone --depth=1 https://github.com/ggml-org/llama.cpp .
 # Set your cross compilers environment variables (adjust if needed)
 ENV CC64=aarch64-linux-gnu-gcc
 ENV CXX64=aarch64-linux-gnu-g++
+
+# remove 'armv9' since gcc-12 doesn't support it
+RUN sed -i '/armv9/d' "ggml/src/CMakeLists.txt"
 
 # Run CMake configure and build
 RUN cmake -S . -B build \
