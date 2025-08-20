@@ -1,30 +1,22 @@
+# Args for Build actions
+ARG BUILDPLATFORM_builder=linux/amd64
+ARG BUILDPLATFORM_runner=linux/arm64
+
 # Stage 1: Builder Docker
-# FROM debian:bookworm-slim AS builder
+FROM debian:trixie-slim AS builder
 
 # Install build dependencies
-#RUN add-apt-repository ppa:ubuntu-toolchain-r/test
-#RUN apt-get update && apt-get install -y \
-#    build-essential \
-#    cmake \
-#    git \
-#    curl \
-#    ninja-build \
-#    ca-certificates \
-#    libopenblas-dev \
-#    libgomp1 \
-#    libcurl4-openssl-dev \
-#    && update-ca-certificates
-FROM --platform=linux/amd64 archlinux:multilib-devel AS builder
-
-RUN pacman -Syu --noconfirm && \
-    pacman -S --noconfirm \
-      cmake \
-      git \
-      ninja \
-      openblas \
-      aarch64-linux-gnu-gcc \
-      aarch64-linux-gnu-binutils \
-      libcurl-compat
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    cmake \
+    git \
+    curl \
+    ninja-build \
+    ca-certificates \
+    libopenblas-dev \
+    libgomp1 \
+    libcurl4-openssl-dev \
+    && update-ca-certificates
 
 WORKDIR /workspace
 
