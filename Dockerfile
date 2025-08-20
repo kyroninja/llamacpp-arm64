@@ -46,6 +46,7 @@ RUN cmake -S . -B build \
     -DCMAKE_C_COMPILER=$CC64 \
     -DCMAKE_CXX_COMPILER=$CXX64 \
     -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_SYSROOT=/usr/aarch64-linux-gnu \
     -DCURL_INCLUDE_DIR=/usr/aarch64-linux-gnu/include \
     -DCURL_LIBRARY=/usr/aarch64-linux-gnu/lib/libcurl.so \
     -DCMAKE_BUILD_TYPE=Release \
