@@ -25,6 +25,7 @@ RUN apt-get update && apt-get install -y \
     libc6-dev-arm64-cross \
     libcurl4-openssl-dev:arm64 \
     libssl-dev:arm64 \
+    pkg-config \
     && update-ca-certificates
 
 WORKDIR /workspace
@@ -35,6 +36,8 @@ RUN git clone --depth=1 https://github.com/ggml-org/llama.cpp .
 # Set your cross compilers environment variables (adjust if needed)
 ENV CC64=aarch64-linux-gnu-gcc
 ENV CXX64=aarch64-linux-gnu-g++
+ENV PKG_CONFIG_PATH=/usr/lib/aarch64-linux-gnu/pkgconfig
+ENV PKG_CONFIG_LIBDIR=/usr/lib/aarch64-linux-gnu/pkgconfig
 
 # remove 'armv9' since gcc-12 doesn't support it
 RUN sed -i '/armv9/d' "ggml/src/CMakeLists.txt"
