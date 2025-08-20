@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev \
     libgomp1 \
     libcurl4-openssl-dev \
+    gcc-aarch64-linux-gnu \
+    g++-aarch64-linux-gnu \
     && update-ca-certificates
 
 WORKDIR /workspace
@@ -53,7 +55,7 @@ RUN mkdir -p /app/full \
     && cp .devops/tools.sh /app/full/tools.sh
 
 # Stage 2: Runtime
-FROM --platform=$BUILDPLATFORM_runner arm64v8/debian:bookworm-slim
+FROM --platform=$BUILDPLATFORM_runner debian:bookworm-slim
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
