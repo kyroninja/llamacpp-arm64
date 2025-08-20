@@ -21,9 +21,7 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev \
     libgomp1 \
     libcurl4-openssl-dev \
-    gcc-multilib \ 
-    g++-multilib \
-    libc6-dev \
+    libc6-dev-i386 \
     && update-ca-certificates
 
 WORKDIR /workspace
