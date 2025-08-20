@@ -5,6 +5,9 @@ ARG BUILDPLATFORM_runner=linux/arm64
 # Stage 1: Builder Docker
 FROM --platform=$BUILDPLATFORM_builder debian:trixie-slim AS builder
 
+# add multilib
+RUN dpkg --add-architecture i386
+
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -18,6 +21,9 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev \
     libgomp1 \
     libcurl4-openssl-dev \
+    gcc-multilib \ 
+    g++-multilib \
+    libc6-dev \
     && update-ca-certificates
 
 WORKDIR /workspace
