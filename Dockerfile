@@ -3,7 +3,7 @@ ARG BUILDPLATFORM_builder=linux/amd64
 ARG BUILDPLATFORM_runner=linux/arm64
 
 # Stage 1: Builder Docker
-FROM --platform=$BUILDPLATFORM_builder debian:bookwork-slim AS builder
+FROM --platform=$BUILDPLATFORM_builder debian:bookworm-slim AS builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
