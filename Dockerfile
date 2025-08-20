@@ -42,7 +42,7 @@ RUN cmake -S . -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DCURL_INCLUDE_DIR=/usr/aarch64-linux-gnu/include \
     -DCURL_LIBRARY=/usr/aarch64-linux-gnu/lib/libcurl.so \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release \
     -DGGML_NATIVE=OFF \
     -DLLAMA_BUILD_TESTS=OFF \
     -DGGML_BACKEND_DL=ON \
