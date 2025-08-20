@@ -57,7 +57,7 @@ RUN mkdir -p /app/full \
     && cp .devops/tools.sh /app/full/tools.sh
 
 # Stage 2: Runtime
-FROM arm64v8/debian:bookworm-slim
+FROM --platform=linux/arm64 arm64v8/debian:bookworm-slim
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
