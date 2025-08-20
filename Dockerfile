@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -y \
     libopenblas-dev \
     libgomp1 \
     libcurl4-openssl-dev \
+    libcurl4-openssl-dev:arm64 \
     gcc-aarch64-linux-gnu \
     g++-aarch64-linux-gnu \
     libc6-dev-arm64-cross \
