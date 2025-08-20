@@ -20,10 +20,10 @@ RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm \
       cmake \
       git \
-      curl \
       ninja \
       openblas \
-      gcc \
+      aarch64-linux-gnu-gcc \
+      aarch64-linux-gnu-binutils \
       libcurl-compat
 
 WORKDIR /workspace
