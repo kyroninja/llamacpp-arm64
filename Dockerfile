@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     gcc-aarch64-linux-gnu \
+    g++-aarch64-linux-gnu \
     ninja-build \
     ca-certificates \
     libopenblas-dev \
