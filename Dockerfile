@@ -18,6 +18,7 @@ RUN apt-get update && apt-get install -y \
     libcurl4-openssl-dev \
     gcc-aarch64-linux-gnu \
     g++-aarch64-linux-gnu \
+    libc6-dev-arm64-cross \
     && update-ca-certificates
 
 WORKDIR /workspace
