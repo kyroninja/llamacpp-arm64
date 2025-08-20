@@ -40,5 +40,7 @@ jobs:
             ghcr.io/${{ secrets.GHCR_USERNAME }}/llamacpp-arm64:${{ env.LLAMA_COMMIT }}
           build-args: |
             LLAMA_COMMIT=${{ env.LLAMA_COMMIT }}
+            BUILDPLATFORM_builder=linux/amd64
+            BUILDPLATFORM_runner=linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
