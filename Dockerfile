@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     cmake \
     git \
     curl \
+    gcc-aarch64-linux-gnu \
     ninja-build \
     ca-certificates \
     libopenblas-dev \
