@@ -5,6 +5,9 @@ ARG BUILDPLATFORM_runner=linux/arm64
 # Stage 1: Builder Docker
 FROM --platform=$BUILDPLATFORM_builder debian:bookworm-slim AS builder
 
+# add arm64 deps
+RUN dpkg --add-architecture arm64
+
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -19,6 +22,8 @@ RUN apt-get update && apt-get install -y \
     gcc-aarch64-linux-gnu \
     g++-aarch64-linux-gnu \
     libc6-dev-arm64-cross \
+    libcurl4-openssl-dev:arm64 \
+    libssl-dev:arm64 \
     && update-ca-certificates
 
 WORKDIR /workspace
