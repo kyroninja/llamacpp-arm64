@@ -14,10 +14,11 @@
 #    libgomp1 \
 #    libcurl4-openssl-dev \
 #    && update-ca-certificates
-FROM archlinux:multilib-devel AS builder
+FROM archlinux:base AS builder
 
 RUN pacman -Syu --noconfirm && \
     pacman -S --noconfirm \
+      base-devel \
       cmake \
       git \
       curl \
