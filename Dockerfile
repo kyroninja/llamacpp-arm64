@@ -3,7 +3,7 @@ ARG BUILDPLATFORM_builder=linux/amd64
 ARG BUILDPLATFORM_runner=linux/arm64
 
 # Stage 1: Builder Docker
-FROM debian:trixie-slim AS builder
+FROM --platform=$BUILDPLATFORM_builder debian:trixie-slim AS builder
 
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
@@ -49,7 +49,7 @@ RUN mkdir -p /app/full \
     && cp .devops/tools.sh /app/full/tools.sh
 
 # Stage 2: Runtime
-FROM --platform=linux/arm64 arm64v8/debian:bookworm-slim
+FROM --platform=$BUILDPLATFORM_runner arm64v8/debian:bookworm-slim
 
 # Install runtime dependencies
 RUN apt-get update && apt-get install -y \
