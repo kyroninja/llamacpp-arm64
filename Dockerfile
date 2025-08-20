@@ -34,7 +34,6 @@ RUN sed -i '/armv9/d' "ggml/src/CMakeLists.txt"
 
 # Run CMake configure and build
 RUN cmake -S . -B build \
-    -DCMAKE_SYSROOT=/usr/aarch64-linux-gnu \
     -DCMAKE_SYSTEM_NAME=Linux \
     -DCMAKE_SYSTEM_PROCESSOR=aarch64 \
     -DCMAKE_C_COMPILER=$CC64 \
