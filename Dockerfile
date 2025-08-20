@@ -1,8 +1,6 @@
 # Stage 1: Builder Docker
 FROM debian:bookworm-slim AS builder
 
-ARG GGML_CPU_ARM_ARCH=armv8-a
-
 # Install build dependencies
 RUN apt-get update && apt-get install -y \
     build-essential \
@@ -34,7 +32,8 @@ RUN cmake -S . -B build \
     -DCMAKE_BUILD_TYPE=Release \
     -DGGML_NATIVE=OFF \
     -DLLAMA_BUILD_TESTS=OFF \
-    -DGGML_CPU_ARM_ARCH=${GGML_CPU_ARM_ARCH} && \
+    -DGGML_BACKEND_DL=ON \
+    -DGGML_CPU_ALL_VARIANTS=ON && \
     cmake --build build -j $(nproc)
 
 RUN mkdir -p /app/full \
